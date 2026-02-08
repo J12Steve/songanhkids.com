@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tích điểm Khu Vui Chơi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Popup animation */
+    @keyframes scaleIn {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .animate-scaleIn {
+      animation: scaleIn 0.25s ease-out;
+    }
+
+    /* Confetti */
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: -10px;
+      width: 8px;
+      height: 14px;
+      opacity: 0.9;
+      animation: confettiFall linear forwards;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-pink-200 via-blue-200 to-purple-200 p-6">
+
+<!-- TIÊU ĐỀ -->
+<div class="max-w-5xl mx-auto mb-1">
+  <h1 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg text-center">
+    🎠 HỆ THỐNG TÍCH ĐIỂM KHU VUI CHƠI
+  </h1>
+</div>
+
+<!-- LOGO -->
+<div class="flex justify-center mb-2">
+  <img src="img/logo-removed1.png"
+       class="w-64 md:w-80 drop-shadow-xl select-none pointer-events-none"
+       alt="Logo">
+</div>
+
+<div class="max-w-5xl mx-auto">
+
+  <!-- THÊM BÉ -->
+  <div class="mb-6 backdrop-blur-xl bg-white/40 border border-white/40 rounded-3xl p-5 shadow-xl">
+    <h2 class="font-semibold text-white drop-shadow mb-3">➕ Thêm bé mới</h2>
+    <div class="flex gap-2">
+      <input id="childName"
+        placeholder="Tên bé"
+        class="flex-1 px-4 py-2 rounded-2xl bg-white/70 border border-white/50 focus:outline-none">
+      <button onclick="addChild()"
+        class="px-6 py-2 rounded-2xl bg-white/80 hover:bg-white text-gray-800 font-semibold">
+        Thêm
+      </button>
+    </div>
+  </div>
+
+  <!-- TÌM KIẾM -->
+  <input id="search"
+    placeholder="🔍 Tìm theo tên hoặc ID thẻ"
+    class="w-full mb-6 px-4 py-3 rounded-2xl bg-white/70 border border-white/50 focus:outline-none"
+    oninput="render()">
+
+  <!-- CARDS -->
+  <div id="cards" class="grid md:grid-cols-2 gap-6"></div>
+</div>
+
+<!-- POPUP CHÚC MỪNG -->
+<div id="popup"
+  class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden
+         flex items-center justify-center z-50">
+
+  <!-- Confetti -->
+  <div id="confetti" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+  <div class="bg-white/90 rounded-3xl p-6 w-80 text-center shadow-2xl
+              animate-scaleIn relative">
+
+    <img src="img/logo-removed1.png"
+         class="w-28 mx-auto mb-3 drop-shadow-lg">
+
+    <h3 class="text-xl font-bold text-pink-500 mb-1">
+      🎉 Chúc mừng!
+    </h3>
+
+    <p id="popupText" class="text-gray-700 mb-4">
+      Bé đã đổi vé thành công 🎟️
+    </p>
+
+    <button onclick="closePopup()"
+      class="w-full py-2 rounded-2xl
+             bg-gradient-to-r from-pink-400 to-purple-400
+             text-white font-semibold shadow-lg">
+      Đóng
+    </button>
+  </div>
+</div>
+
+<script>
+/* Obfuscated by J2TEAM.org */const _0x3df361=_0x571b;function _0x571b(_0x2dfce5,_0xa7bdac){_0x2dfce5=_0x2dfce5-0xfe;const _0x378b6b=_0x378b();let _0x571b42=_0x378b6b[_0x2dfce5];return _0x571b42;}(function(_0x3812da,_0x1ee596){const _0x422310=_0x571b,_0x3d79ad=_0x3812da();while(!![]){try{const _0x117852=parseInt(_0x422310(0x119))/0x1+parseInt(_0x422310(0x13a))/0x2*(parseInt(_0x422310(0x121))/0x3)+parseInt(_0x422310(0x125))/0x4*(-parseInt(_0x422310(0x136))/0x5)+-parseInt(_0x422310(0x102))/0x6*(-parseInt(_0x422310(0x12e))/0x7)+-parseInt(_0x422310(0x109))/0x8+-parseInt(_0x422310(0x123))/0x9+parseInt(_0x422310(0x10e))/0xa;if(_0x117852===_0x1ee596)break;else _0x3d79ad['push'](_0x3d79ad['shift']());}catch(_0x5b1dd3){_0x3d79ad['push'](_0x3d79ad['shift']());}}}(_0x378b,0xdd653));let children=JSON[_0x3df361(0x12b)](localStorage[_0x3df361(0x130)](_0x3df361(0x11d)))||[],openMenuId=null,redeemingId=null;const LOGO=_0x3df361(0x122);function save(){const _0x40ecdd=_0x3df361;localStorage[_0x40ecdd(0x13c)](_0x40ecdd(0x11d),JSON[_0x40ecdd(0x127)](children));}function addChild(){const _0xf5780f=_0x3df361,_0x45f508=document['getElementById'](_0xf5780f(0x115))[_0xf5780f(0x129)][_0xf5780f(0x124)]();if(!_0x45f508)return alert(_0xf5780f(0xfe));children[_0xf5780f(0x10c)]({'id':Date[_0xf5780f(0x13f)](),'name':_0x45f508,'stamps':0x0,'tickets':0x0}),document[_0xf5780f(0x134)](_0xf5780f(0x115))['value']='',save(),render();}function addStamp(_0x410a4f){const _0x30dc63=_0x3df361,_0x146a7b=children[_0x30dc63(0x108)](_0x56d137=>_0x56d137['id']===_0x410a4f);if(_0x146a7b[_0x30dc63(0x12f)]<0xa)_0x146a7b[_0x30dc63(0x12f)]++;save(),render();}function redeem(_0x103ce1){const _0x34d994=_0x3df361,_0x3f20e9=children['find'](_0x56fe57=>_0x56fe57['id']===_0x103ce1);redeemingId=_0x103ce1,document[_0x34d994(0x134)](_0x34d994(0x105))[_0x34d994(0x135)]=_0x34d994(0xff)+_0x3f20e9[_0x34d994(0x138)]+_0x34d994(0x13d),document[_0x34d994(0x134)](_0x34d994(0x128))[_0x34d994(0x132)][_0x34d994(0x143)](_0x34d994(0x10d)),launchConfetti();}function _0x378b(){const _0x33c706=['stamps','getItem','cards','classList',')\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20class=\x22flex-1\x20py-2\x20rounded-2xl\x20bg-white/80\x20hover:bg-white\x20text-gray-800\x20font-semibold\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20➕\x20Thêm\x20dấu\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','getElementById','innerText','52820nVOppg','from','name','Sửa\x20tên\x20bé:','10rsPJYY','includes','setItem','\x20đã\x20đổi\x20thành\x20công\x201\x20vé\x20miễn\x20phí\x20🎟️','toString','now','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22text-lg\x20font-bold\x22>🎟️\x20','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22relative\x20backdrop-blur-xl\x20bg-white/45\x20border\x20border-white/40\x20rounded-3xl\x20p-5\x20shadow-xl\x20text-white\x22>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22absolute\x20inset-0\x20bg-black/15\x20rounded-3xl\x20pointer-events-none\x22></div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22relative\x22>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22toggleMenu(',')\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20class=\x22absolute\x20top-3\x20right-3\x20text-2xl\x20px-2\x20rounded-full\x20hover:bg-white/20\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20⋯\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','remove','Vui\x20lòng\x20nhập\x20tên\x20bé','Bé\x20','div','filter','835854XrPgbK',')\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20class=\x22flex-1\x20py-2\x20rounded-2xl\x20bg-green-400/90\x20hover:bg-green-400\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-white\x20font-bold\x20animate-pulse\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20🎁\x20Đổi\x20vé\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>',')\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20class=\x22block\x20w-full\x20text-left\x20px-4\x20py-2\x20hover:bg-gray-100\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20✏️\x20Sửa\x20phiếu\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22deleteChild(','popupText','length','confetti','find','14474048gFmRHc','toLowerCase','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22w-12\x20h-12\x20rounded-full\x20border\x20border-white/70\x20bg-white/30\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex\x20items-center\x20justify-center\x20shadow-inner\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','push','hidden','21288990GhKyRC','className','tickets','createElement','#a78bfa','#f472b6','add','childName','#34d399','Bạn\x20có\x20chắc\x20muốn\x20xóa\x20phiếu\x20này\x20không?','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>','1643268RhzkHA','innerHTML','floor','left','children','style','random','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','369048zeQEVs','img/logo-removed1.png','14713479pERHgr','trim','172gZjPdS','search','stringify','popup','value','animationDuration','parse','appendChild','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','21zZKnct'];_0x378b=function(){return _0x33c706;};return _0x378b();}function closePopup(){const _0x2b1e60=_0x3df361,_0xcb29e8=children[_0x2b1e60(0x108)](_0x449159=>_0x449159['id']===redeemingId);if(!_0xcb29e8)return;_0xcb29e8[_0x2b1e60(0x12f)]=0x0,_0xcb29e8[_0x2b1e60(0x110)]++,save(),render(),document[_0x2b1e60(0x134)]('confetti')[_0x2b1e60(0x11a)]='',document[_0x2b1e60(0x134)]('popup')[_0x2b1e60(0x132)][_0x2b1e60(0x114)](_0x2b1e60(0x10d)),redeemingId=null;}function editChild(_0x2b6735){const _0x29a518=_0x3df361,_0x473021=children[_0x29a518(0x108)](_0x17b602=>_0x17b602['id']===_0x2b6735),_0x17fa09=prompt(_0x29a518(0x139),_0x473021[_0x29a518(0x138)]);_0x17fa09&&_0x17fa09[_0x29a518(0x124)]()&&(_0x473021['name']=_0x17fa09[_0x29a518(0x124)](),save(),render());}function deleteChild(_0xab0c37){const _0x4ac1cd=_0x3df361;if(!confirm(_0x4ac1cd(0x117)))return;children=children[_0x4ac1cd(0x101)](_0x273636=>_0x273636['id']!==_0xab0c37),save(),render();}function toggleMenu(_0x3148f9){openMenuId=openMenuId===_0x3148f9?null:_0x3148f9,render();}function launchConfetti(){const _0x5edd5f=_0x3df361,_0x38ea7c=document[_0x5edd5f(0x134)](_0x5edd5f(0x107));_0x38ea7c[_0x5edd5f(0x11a)]='';const _0x2a6a90=[_0x5edd5f(0x113),_0x5edd5f(0x112),'#60a5fa',_0x5edd5f(0x116),'#facc15'];for(let _0x5bf02d=0x0;_0x5bf02d<0x28;_0x5bf02d++){const _0x43175f=document[_0x5edd5f(0x111)](_0x5edd5f(0x100));_0x43175f[_0x5edd5f(0x10f)]='confetti-piece',_0x43175f[_0x5edd5f(0x11e)][_0x5edd5f(0x11c)]=Math[_0x5edd5f(0x11f)]()*0x64+'%',_0x43175f['style']['backgroundColor']=_0x2a6a90[Math[_0x5edd5f(0x11b)](Math[_0x5edd5f(0x11f)]()*_0x2a6a90[_0x5edd5f(0x106)])],_0x43175f['style'][_0x5edd5f(0x12a)]=0x2+Math['random']()*0x2+'s',_0x38ea7c[_0x5edd5f(0x12c)](_0x43175f);}}function render(){const _0x2ac880=_0x3df361,_0x1e7eeb=document[_0x2ac880(0x134)](_0x2ac880(0x126))[_0x2ac880(0x129)][_0x2ac880(0x10a)](),_0x434e52=document[_0x2ac880(0x134)](_0x2ac880(0x131));_0x434e52['innerHTML']='',children['filter'](_0x1382b2=>_0x1382b2[_0x2ac880(0x138)]['toLowerCase']()[_0x2ac880(0x13b)](_0x1e7eeb)||_0x1382b2['id'][_0x2ac880(0x13e)]()[_0x2ac880(0x13b)](_0x1e7eeb))['forEach'](_0x15a023=>{const _0x4671aa=_0x2ac880;_0x434e52[_0x4671aa(0x11a)]+=_0x4671aa(0x141)+_0x15a023['id']+_0x4671aa(0x142)+(openMenuId===_0x15a023['id']?'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22absolute\x20top-12\x20right-3\x20bg-white/95\x20text-gray-800\x20rounded-xl\x20shadow-lg\x20overflow-hidden\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22editChild('+_0x15a023['id']+_0x4671aa(0x104)+_0x15a023['id']+')\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20class=\x22block\x20w-full\x20text-left\x20px-4\x20py-2\x20hover:bg-red-100\x20text-red-600\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20🗑️\x20Xóa\x20phiếu\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>':'')+'\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22flex\x20justify-between\x20items-center\x20mb-4\x20pt-6\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22font-bold\x20text-lg\x22>'+_0x15a023[_0x4671aa(0x138)]+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22text-sm\x20opacity-90\x22>ID:\x20'+_0x15a023['id']+_0x4671aa(0x140)+_0x15a023['tickets']+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grid\x20grid-cols-5\x20gap-3\x20justify-items-center\x20mb-5\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+Array[_0x4671aa(0x137)]({'length':0xa})['map']((_0x2626fe,_0x17c45a)=>_0x4671aa(0x10b)+(_0x17c45a<_0x15a023[_0x4671aa(0x12f)]?_0x4671aa(0x120)+LOGO+'\x22\x20class=\x22w-8\x20h-8\x20object-contain\x20animate-scaleIn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20':'')+_0x4671aa(0x12d))['join']('')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22flex\x20gap-3\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22addStamp('+_0x15a023['id']+_0x4671aa(0x133)+(_0x15a023[_0x4671aa(0x12f)]===0xa?'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22redeem('+_0x15a023['id']+_0x4671aa(0x103):'')+_0x4671aa(0x118);});}render();
+</script>
+
+</body>
+</html>
